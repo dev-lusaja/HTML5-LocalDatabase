@@ -8,4 +8,40 @@
 	
 </body>
 <script src="assets/js/db.js"></script>
+<script>
+	var db = new Database();
+	db.connect();
+
+	var table_schema = {
+			table_name: 'tb_test',
+			fields: [
+				{
+					primary_key: true,
+					field_name: 'id',
+					field_type: 'integer',
+					not_null: true
+				},
+				{
+					primary_key: false,
+					field_name: 'fname',
+					field_type: 'text',
+					not_null: true
+				},
+				{
+					primary_key: false,
+					field_name: 'bgcolor',
+					field_type: 'text',
+					not_null: false
+				},
+				{
+					primary_key: false,
+					field_name: 'font',
+					field_type: 'text',
+					not_null: true
+				}
+			]
+	};
+
+	db.createTable(table_schema);
+</script>
 </html>
