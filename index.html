@@ -2,46 +2,18 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Local Databases</title>
+	<title>Local Database</title>
 </head>
 <body>
 	
 </body>
+<script src="models/users.js"></script>
+<script src="data/users.js"></script>
 <script src="assets/js/db.js"></script>
 <script>
 	var db = new Database();
 	db.connect();
-
-	var table_schema = {
-			table_name: 'tb_test',
-			fields: [
-				{
-					primary_key: true,
-					field_name: 'id',
-					field_type: 'integer',
-					not_null: true
-				},
-				{
-					primary_key: false,
-					field_name: 'fname',
-					field_type: 'text',
-					not_null: true
-				},
-				{
-					primary_key: false,
-					field_name: 'bgcolor',
-					field_type: 'text',
-					not_null: false
-				},
-				{
-					primary_key: false,
-					field_name: 'font',
-					field_type: 'text',
-					not_null: true
-				}
-			]
-	};
-
-	db.createTable(table_schema);
+	db.createTable(user_model);
+	db.insert(user_data);
 </script>
 </html>
