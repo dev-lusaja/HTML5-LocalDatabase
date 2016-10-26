@@ -15,5 +15,6 @@
 	db.connect();
 	db.createTable(user_model);
 	db.insert(user_data);
+	console.log(db.selectAll('users'));
 </script>
 </html>

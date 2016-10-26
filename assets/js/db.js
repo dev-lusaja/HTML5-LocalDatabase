@@ -34,6 +34,14 @@
 			}
 		},
 
+		self.dataResultHandler = function (transaction, result) {
+			console.log(result);
+		},
+
+		self.dataErrorHandler = function (transaction, error) {
+			console.log(error);
+		},
+
 		self.createTable = function(table_schema) {
 			try {
 				self.connection.transaction(
@@ -60,7 +68,7 @@
 						}
 						sql = sql + ');';
 
-						transaction.executeSql(sql, [], null, null);
+						transaction.executeSql(sql, [], self.dataResultHandler, self.dataErrorHandler);
 						console.log('Table created');		
 					}
 				)
@@ -88,12 +96,12 @@
 								if (j + 1 < datalen) {
 									sql = sql + ', '
 								}
-								
+
 								key = keys[j];
 								values_to_insert.push(data.values[i][key]);
 							}
 							sql = sql + ' );';
-							transaction.executeSql(sql, values_to_insert);
+							transaction.executeSql(sql, values_to_insert, self.dataResultHandler, self.dataErrorHandler);
 							console.log('register inserted');
 						}
 				    }
@@ -102,7 +110,21 @@
 				console.log('insert error: ' + e);
 				return;
 			}
+		},
+
+		self.selectAll = function(table) {
+			try {
+				self.connection.transaction(
+				    function (transaction) {
+				        transaction.executeSql('SELECT * FROM ' + table + ';', [], self.dataResultHandler, self.dataErrorHandler);
+				    }
+				);
+			} catch(e) {
+				console.log('selectAll error: ' + e);
+				return;
+			}
 		}
 
 	}
+
 })();
