@@ -39,3 +39,9 @@ var user_data = {
 			},
 		]
 };
+
+var user_select = {
+	name: 'users',
+	fields: ['id', 'name', 'email', 'age'],
+	filters: {id: 6, name: 'lalal'}
+}

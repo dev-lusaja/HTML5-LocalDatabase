@@ -123,8 +123,37 @@
 				console.log('selectAll error: ' + e);
 				return;
 			}
-		}
+		},
 
+		self.select = function(table) {
+			try {
+				self.connection.transaction(
+				    function (transaction) {
+				    	var fields = table.fields.join();
+				    	var sql = 'SELECT ' + fields + ' FROM ' + table.name;
+				    	var key_filters = Object.keys(table.filters);
+				    	var filters = [];
+
+				    	if (key_filters) {
+				    		sql = sql + ' WHERE ';
+				    		var len = key_filters.length;
+					    	for (var i = 0; i < len; i++) {
+					    		if (i != 0 && i < len) {
+					    			sql = sql + ' AND ';
+					    		}
+					    		var key = key_filters[i];
+					    		sql = sql + key + ' = ' + '"' + table.filters[key] + '"';
+					    	}
+				    	}
+				    	sql = sql + ';';
+				        transaction.executeSql(sql, [], self.dataResultHandler, self.dataErrorHandler);
+				    }
+				);
+			} catch(e) {
+				console.log('select error: ' + e);
+				return;
+			}
+		}
 	}
 
 })();

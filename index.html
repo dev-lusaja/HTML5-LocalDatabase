@@ -13,8 +13,9 @@
 <script>
 	var db = new Database();
 	db.connect();
-	db.createTable(user_model);
-	db.insert(user_data);
-	console.log(db.selectAll('users'));
+	// db.createTable(user_model);
+	// db.insert(user_data);
+	// console.log(db.selectAll('users'));
+	console.log(db.select(user_select));
 </script>
 </html>
