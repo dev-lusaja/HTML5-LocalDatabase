@@ -153,6 +153,42 @@
 				console.log('select error: ' + e);
 				return;
 			}
+		},
+
+		self.update = function(table) {
+			try {
+				self.connection.transaction(
+					function(transaction) {
+						var key_sets = Object.keys(table.sets);
+						var key_filters = Object.keys(table.filters);
+						var len = key_sets.length;
+						var sql = 'UPDATE ' + table.name + ' SET ';
+						var update_values = [];
+
+						for (var i = 0; i < len; i++) {
+							var key = key_sets[i]
+							sql = sql + key + ' = ?';
+							update_values.push(table.sets[key]);
+						}
+						if (key_filters) {
+							sql = sql + ' WHERE ';
+							var key_len = key_filters.length;
+							for (var i = 0; i < key_len; i++) {
+								var key = key_filters[i];
+								sql = sql + key + ' = "' + table.filters[key] + '"';
+								if (i + 1 < key_len) {
+									sql = sql + ' AND ';
+								}
+							}
+						}
+				    	sql = sql + ';';
+				        transaction.executeSql(sql, update_values, self.dataResultHandler, self.dataErrorHandler);
+					}
+				);
+			} catch(e) {
+				console.log('select error: ' + e);
+				return;
+			}
 		}
 	}
 

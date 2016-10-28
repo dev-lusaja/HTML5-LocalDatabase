@@ -45,3 +45,9 @@ var user_select = {
 	fields: ['id', 'name', 'email', 'age'],
 	filters: {id: 6, name: 'lalal'}
 }
+
+var user_update = {
+	name: 'users',
+	sets: {name: 'timoteo'},
+	filters: {id: 6, name: 'name'}
+}
